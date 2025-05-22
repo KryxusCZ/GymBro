@@ -44,7 +44,7 @@ Track your workouts, set goals, monitor progress, and manage your fitness journe
 
 3. **Open your browser**
    ```
-   http://localhost:5173/
+   http://localhost:****/
    ```
 
 ---
