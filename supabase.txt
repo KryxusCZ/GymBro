@@ -1,0 +1,112 @@
+create table public.coach_athletes (
+  id uuid not null default gen_random_uuid (),
+  coach_id uuid not null,
+  athlete_id uuid not null,
+  status text not null default 'pending'::text,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  constraint coach_athletes_pkey primary key (id),
+  constraint coach_athletes_coach_id_athlete_id_key unique (coach_id, athlete_id),
+  constraint fk_athlete_profile foreign KEY (athlete_id) references profiles (id) on delete CASCADE,
+  constraint fk_coach_profile foreign KEY (coach_id) references profiles (id) on delete CASCADE,
+  constraint coach_athletes_status_check check (
+    (
+      status = any (
+        array['pending'::text, 'active'::text, 'rejected'::text]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+create table public.goals (
+  id uuid not null default gen_random_uuid (),
+  user_id uuid not null,
+  title text not null,
+  description text null,
+  target_value numeric not null,
+  current_value numeric not null default 0,
+  unit text not null,
+  start_date timestamp with time zone not null default now(),
+  end_date timestamp with time zone not null,
+  category text null,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  exercise_name text null,
+  constraint goals_pkey primary key (id),
+  constraint goals_user_id_fkey foreign KEY (user_id) references auth.users (id) on delete CASCADE,
+  constraint goals_category_check check (
+    (
+      category = any (
+        array[
+          'strength'::text,
+          'endurance'::text,
+          'flexibility'::text,
+          'weight'::text,
+          'other'::text
+        ]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+create table public.profiles (
+  id uuid not null,
+  name text null,
+  avatar_url text null,
+  role text not null,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  coach_id uuid null,
+  email text null,
+  constraint profiles_pkey primary key (id),
+  constraint fk_profiles_coach foreign KEY (coach_id) references profiles (id) on delete set null,
+  constraint profiles_coach_id_fkey foreign KEY (coach_id) references profiles (id),
+  constraint profiles_id_fkey foreign KEY (id) references auth.users (id) on delete CASCADE,
+  constraint profiles_role_check check (
+    (
+      role = any (
+        array['athlete'::text, 'coach'::text, 'admin'::text]
+      )
+    )
+  )
+) TABLESPACE pg_default;
+
+
+create table public.workout_exercises (
+  id uuid not null default gen_random_uuid (),
+  workout_id uuid not null,
+  name text not null,
+  sets integer not null,
+  reps integer not null,
+  weight numeric not null,
+  rest_time integer null,
+  notes text null,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  constraint workout_exercises_pkey primary key (id),
+  constraint fk_workout_id foreign KEY (workout_id) references workouts (id) on delete CASCADE
+) TABLESPACE pg_default;
+
+create index IF not exists workout_exercises_workout_id_idx on public.workout_exercises using btree (workout_id) TABLESPACE pg_default;
+
+create table public.workouts (
+  id uuid not null default gen_random_uuid (),
+  user_id uuid not null,
+  title text not null,
+  description text null,
+  duration integer not null,
+  energy_expended integer not null,
+  effort_level integer not null,
+  date timestamp with time zone not null default now(),
+  category text not null,
+  created_at timestamp with time zone not null default now(),
+  updated_at timestamp with time zone not null default now(),
+  constraint workouts_pkey primary key (id),
+  constraint workouts_user_id_fkey foreign KEY (user_id) references auth.users (id) on delete CASCADE,
+  constraint workouts_effort_level_check check (
+    (
+      (effort_level >= 1)
+      and (effort_level <= 10)
+    )
+  )
+) TABLESPACE pg_default;
