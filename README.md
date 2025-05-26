@@ -50,3 +50,71 @@ Track your workouts, set goals, monitor progress, and manage your fitness journe
 ---
 
 ## Project Structure
+
+
+## README part for Tvorba webových aplikací III
+## ✅ Implementováno
+
+- Vícevrstvá architektura (UI – Services – Supabase DB)
+- Datové modely: Workout, Goal, User, Exercise
+- Autentizace pomocí Supabase Auth (JWT)
+- Role-based přístup: Coach vs. Athlete
+- Validace vstupních dat: `zod`, `react-hook-form`
+- Uživatelská dokumentace s obrázky
+- Automatická aktualizace cílů dle historie tréninků
+
+## 🚧 Chybí / plánované
+
+- Server-side logování (závislé na produkčním backendu)
+- Monitoring provozu (bude řešeno v nasazení)
+- Generovaná dokumentace API (neaplikovatelné pro Supabase)
+
+
+
+Zaměření a cíl práce:
+✔️ Webová aplikace s rozdělením pro athlety a trenéry
+
+✔️ Hlavní funkčnost: správa tréninků, cílů, analýzy, přehled výkonu
+
+✔️ Projekt má backend (Supabase), frontend (React/Next.js), a validní datový model
+
+🔹 Architektura a vrstvy:
+✔️ Aplikace využívá logickou strukturu:
+
+entity (datové objekty ve stylu Supabase tabulek),
+
+služby (saveWorkoutToDatabase, updateWorkoutInDatabase...),
+
+kontrolery ve smyslu stránek/formulářů
+
+✔️ Separace odpovědnosti: Logika není ve vizuální vrstvě (např. WorkoutForm volá služby)
+
+✔️ Použití Tailwind CSS pro stylování – komponenty jsou oddělené
+
+🔹 Bezpečnost:
+✔️ Používáš Supabase Auth
+
+✔️ Autentizace je implementována (useAuth a privátní routy)
+
+✔️ Role-based přístup (athlete vs. coach)
+
+🔹 Validace a UX:
+✔️ Využití zod + react-hook-form pro validaci na klientovi
+
+✔️ Zobrazování validace ve formulářích
+
+✔️ API komunikace s elegantním fallbackem (toast.error, logování do konzole)
+
+🔹 UI/UX a dokumentace uživatelská:
+✔️ Uživatelské příručky, s obrázky a popisem
+
+✔️ Design aplikace zaměřený na jednoduchost a použitelnost
+
+❌ Co ti zatím chybí nebo je potřeba doplnit:
+Požadavek	                                                                        Chybějící/Doplnit	                                                                                       Návrh řešení
+Vrstvená architektura – backend	                                  🔸 Nemáš tradiční backend (např. Node.js s Express, Spring...)	                ✅ Používám Supabase jako BaaS (Backend-as-a-Service) a popsat entity a služby
+DTO/DAO rozhraní	                                                 🔸 Nemáš explicitní DTO nebo repository pattern	                               ✅ WorkoutFormValues nebo WorkoutWithExercises slouží jako přenosové objekty mezi UI a DB
+Logování a monitoring	                                           🔴 Chybí serverové logování, health-check, error monitoring	                   ✅ Supabase loguje události na serveru automaticky
+Validace vstupů na backendu	                                     🔴 Supabase nemá vlastní validaci nad sloupci, validuješ jen v Reactu	          ✅ Je to limitaci BaaS 
+Generovaná API dokumentace (Swagger, Redoc)                        🔴 Nemám backend s OpenAPI – není co dokumentovat	                               ✅ Backend zajišťuje Supabase, API není veřejné, interakce probíhá přes client SDK
+Monitoring	                                                       🔴 Není health-check endpoint ani uptime sledování	                            ✅ Plánuju integraci (např. Vercel analytics nebo Sentry) v produkčním nasazení
