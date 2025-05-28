@@ -76,7 +76,7 @@ Zaměření a cíl práce:
 
 ✔️ Hlavní funkčnost: správa tréninků, cílů, analýzy, přehled výkonu
 
-✔️ Projekt má backend (Supabase), frontend (React/Next.js), a validní datový model
+✔️ Projekt má backend (Supabase), frontend (React/Vite.js), a validní datový model
 
 🔹 Architektura a vrstvy:
 ✔️ Aplikace využívá logickou strukturu:
@@ -110,11 +110,12 @@ kontrolery ve smyslu stránek/formulářů
 
 ✔️ Design aplikace zaměřený na jednoduchost a použitelnost
 
-❌ Co ti zatím chybí nebo je potřeba doplnit:
+❌ Chybí nebo je potřeba doplnit:
 Požadavek	                                                                        Chybějící/Doplnit	                                                                                       Návrh řešení
-Vrstvená architektura – backend	                                  🔸 Nemáš tradiční backend (např. Node.js s Express, Spring...)	                ✅ Používám Supabase jako BaaS (Backend-as-a-Service) a popsat entity a služby
-DTO/DAO rozhraní	                                                 🔸 Nemáš explicitní DTO nebo repository pattern	                               ✅ WorkoutFormValues nebo WorkoutWithExercises slouží jako přenosové objekty mezi UI a DB
+Vrstvená architektura – backend	                                  🔸 Nemáš tradiční backend (např. Node.js s Express, Spring...)	                ✅ Používám Supabase jako BaaS (Backend-as-a-Service) 
+
+DTO/DAO rozhraní	                                                 🔸 Nemáš explicitní DTO nebo repository pattern	                               ✅ WorkoutFormValues nebo WorkoutWithExercises slouží                                                                                                                                                          jako přenosové objekty mezi UI a DB
 Logování a monitoring	                                           🔴 Chybí serverové logování, health-check, error monitoring	                   ✅ Supabase loguje události na serveru automaticky
 Validace vstupů na backendu	                                     🔴 Supabase nemá vlastní validaci nad sloupci, validuješ jen v Reactu	          ✅ Je to limitaci BaaS 
-Generovaná API dokumentace (Swagger, Redoc)                        🔴 Nemám backend s OpenAPI – není co dokumentovat	                               ✅ Backend zajišťuje Supabase, API není veřejné, interakce probíhá přes client SDK
-Monitoring	                                                       🔴 Není health-check endpoint ani uptime sledování	                            ✅ Plánuju integraci (např. Vercel analytics nebo Sentry) v produkčním nasazení
+Generovaná API dokumentace (Swagger, Redoc)                        🔴 Nemám backend s OpenAPI – není co dokumentovat	                               ✅ Backend zajišťuje Supabase, API není veřejné,                                                                                                                                                               interakce probíhá přes client SDK
+Monitoring	                                                       🔴 Není health-check endpoint ani uptime sledování	                            ✅ Plánuju integraci (např. Vercel analytics nebo                                                                                                                                                              Sentry) v produkčním nasazení
